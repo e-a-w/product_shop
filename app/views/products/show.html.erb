@@ -15,4 +15,7 @@
   </tbody>
 </table>
 
-<%= link_to "view all products?", products_path, class: "my-20 text-xl text-sky-600 hover:text-sky-400 font-bold" %>
+<div class="my-10 flex flex-col gap-2 text-xl text-sky-600 font-bold">
+  <%= link_to "edit this product?", edit_product_path(@product.id), class: "hover:text-sky-400" %>
+  <%= link_to "view all products?", products_path, class: "hover:text-sky-400" %>
+</div>

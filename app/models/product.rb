@@ -21,6 +21,8 @@ class Product < ApplicationRecord
   private
 
   def format_date(date)
+    return unless date.present?
+
     date.utc.strftime("%A %b %-d, %l:%M%P %z").squish
   end
 end
