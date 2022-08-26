@@ -1,0 +1,18 @@
+<h1 class="text-3xl font-bold mb-10"><%= @product.name.upcase %></h1>
+
+<table class="text-left border-2 border-slate-300 shadow-md shadow-slate-400">
+  <tbody>
+    <% @product.display_attributes.each.with_index do |(name, value), idx| %>
+    <tr class="bg-slate-<%= idx % 2 == 0 ? '50' : '300' %>">
+      <th scope="row" class="pl-2 pr-10">
+        <%= name %>
+      </th>
+      <td class="pr-2">
+        <%= value %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "view all products?", products_path, class: "my-20 text-xl text-sky-600 hover:text-sky-400 font-bold" %>
