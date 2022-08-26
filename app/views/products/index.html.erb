@@ -1,4 +1,8 @@
-<h1 class="text-3xl text-center font-bold mb-10">Products</h1>
+<header class="absolute top-0 left-0 w-full h-16 flex justify-center items-center bg-slate-800 text-slate-50">
+  <h1 class="text-3xl text-center font-bold">Products</h1>
+</header>
+
+<%= link_to "create new product?", new_product_path, class: "font-bold mt-16 mb-10 text-sky-600 hover:text-sky-400" %>
 
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-x-5 gap-y-10">
   <% @products&.each do |product| %>

@@ -2,12 +2,26 @@ class ProductsController < ApplicationController
   before_action :find_product, only: %i[show edit update]
 
   def index
-    @products = Product.all
+    @products = Product.all.order("UPPER(name)")
   end
 
   def show; end
 
   def edit; end
+
+  def new
+    @product = Product.new
+  end
+
+  def create
+    @product = Product.new(permitted_create_params)
+    if @product.save
+      redirect_to @product, success: 'product created successfully!'
+    else
+      flash[:error] = @product.errors.full_messages.map(&:downcase).join(', ')
+      render :new, status: :unprocessable_entity
+    end
+  end
 
   def update
     if @product.update(permitted_update_params)
@@ -22,6 +36,10 @@ class ProductsController < ApplicationController
 
   def permitted_update_params
     params.require(:product).permit(:name, :description, :price)
+  end
+
+  def permitted_create_params
+    params.require(:product).permit(:name, :description, :price, :quantity)
   end
 
   def find_product
