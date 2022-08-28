@@ -4,4 +4,6 @@ class Category < ApplicationRecord
   validates :department, presence: true
 
   enum department: { misc: 0, grocery: 1, beverage: 2, apparel: 3, houseware: 4, electronics: 5 }
+
+  has_many :products
 end

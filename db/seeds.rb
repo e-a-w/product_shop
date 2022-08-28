@@ -1,4 +1,4 @@
-def random_category_name(category, idx)
+def category_name(category, idx)
   val = case category
         when 'grocery'
           %w[snacks dairy breakfast baking produce]
@@ -14,7 +14,6 @@ def random_category_name(category, idx)
           %w[pets toys outdoor holiday cafe]
         end
 
-        puts category, idx, val[idx], "\n\n"
   val[idx]
 end
 
@@ -23,20 +22,23 @@ Product.delete_all
 
 Category.departments.each do |category, i|
   5.times do |j|
-    Category.create(
-      name: random_category_name(category, j),
+    Category.create!(
+      name: category_name(category, j),
       department: i,
-      discount_percent: (j % 3).zero? ? nil : rand(99)
+      discount_percent: (j % 3).zero? ? 0 : rand(99)
     )
   end
 end
 
-50.times do |i|
-  Product.create(
-    name: Faker::Commerce.unique.product_name,
-    description: (i % 3).zero? ? Faker::Company.catch_phrase : nil,
-    price: Faker::Number.within(range: 1..150),
-    quantity: Faker::Number.within(range: 0..100),
-    last_sold_at: Faker::Date.between(from: 1.year.ago, to: Date.yesterday)
-  )
+Category.find_each do |category|
+  30.times do |j|
+    Product.create(
+      category_id: category.id,
+      name: Faker::Commerce.unique.product_name,
+      description: (j % 3).zero? ? nil : Faker::Company.catch_phrase,
+      price: Faker::Number.within(range: 1..150),
+      quantity: Faker::Number.within(range: 0..100),
+      last_sold_at: Faker::Date.between(from: 1.year.ago, to: Date.yesterday)
+    )
+  end
 end
