@@ -1,4 +1,4 @@
-<h1 class="text-3xl font-bold mb-10"><%= @product.name.upcase %></h1>
+<h1 class="text-3xl font-bold mb-10"><%= @product.display_name %></h1>
 
 <table class="text-left border-2 border-slate-300 shadow-md shadow-slate-400">
   <tbody>
@@ -15,7 +15,11 @@
   </tbody>
 </table>
 
-<div class="my-10 flex flex-col gap-2 text-xl text-sky-600 font-bold">
-  <%= link_to "edit this product?", edit_product_path(@product.id), class: "hover:text-sky-400" %>
-  <%= link_to "view all products?", products_path, class: "hover:text-sky-400" %>
+<div class="my-10 w-full text-center">
+  <h3 class="font-bold text-2xl pb-3">Actions</h3>
+  <div class="flex flex-col justify-center items-center text-xl font-bold">
+    <%= link_to "edit this product?", edit_product_path(@product.id), class: "text-emerald-600 hover:text-emerald-400" %>
+    <%= link_to "delete this product?", confirm_destroy_product_path(@product), class: "text-red-600 hover:text-red-400" %>
+    <%= link_to "view all products?", products_path, class: "text-sky-600 hover:text-sky-400" %>
+  </div>
 </div>

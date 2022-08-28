@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :find_product, only: %i[show edit update]
+  before_action :find_product, only: %i[show edit update confirm_destroy destroy]
 
   def index
     @products = Product.all.order("UPPER(name)")
@@ -9,6 +9,13 @@ class ProductsController < ApplicationController
 
   def edit; end
 
+  def confirm_destroy; end
+
+  def destroy
+    @product.destroy
+    redirect_to products_path, status: :see_other, success: 'product deleted successfully'
+  end
+
   def new
     @product = Product.new
   end
@@ -16,7 +23,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(permitted_create_params)
     if @product.save
-      redirect_to @product, success: 'product created successfully!'
+      redirect_to @product, status: :created, success: 'product created successfully!'
     else
       flash[:error] = @product.errors.full_messages.map(&:downcase).join(', ')
       render :new, status: :unprocessable_entity
@@ -25,7 +32,7 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(permitted_update_params)
-      redirect_to @product, success: 'update successful!'
+      redirect_to @product, status: :ok, success: 'update successful!'
     else
       flash[:error] = @product.errors.full_messages.map(&:downcase).join(', ')
       render :edit, status: :unprocessable_entity

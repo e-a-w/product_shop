@@ -7,7 +7,7 @@
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-x-5 gap-y-10">
   <% @products&.each do |product| %>
     <div class="p-2 flex flex-col justify-between items-center gap-3 text-center border border-slate-800 rounded-md shadow-md shadow-slate-400 bg-white">
-      <h3 class="text-xl font-semibold"><%= product.name.upcase %></h3>
+      <h3 class="text-xl font-semibold"><%= product.display_name %></h3>
       <%= link_to "--> view product details", product_path(product.id), class: "italic text-sky-600 hover:text-sky-400" %>
       <div class="w-full pt-2 border-t border-gray-400 border-dashed">
         <p><em>Price:</em> <%= product.formatted_price %></p>

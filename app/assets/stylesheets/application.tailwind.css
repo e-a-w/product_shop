@@ -2,12 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+/* @layer utilities {
+  .danger {
+    bg-red-500 text-white font-bold;
   }
+} */
+
+.btn {
+  padding: 5px 7px;
+  border-radius: 5px;
+  transition: all .5s linear;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-*/
+.danger-btn {
+  background: #ef4444;
+  color: white;
+  font-weight: bold;
+}
+
+.danger-btn:hover {
+  background-color: #b91c1c;
+}

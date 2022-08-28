@@ -1,0 +1,11 @@
+<h1 class="text-3xl font-bold">Warning</h1>
+
+<div class="mt-10 flex flex-col gap-10 items-center">
+  <p>Are you sure you want to delete <%= @product.display_name %>? This action is PERMANENT and cannot be reversed.</p>
+
+  <%= link_to product_path(@product), data: { turbo_method: :delete } do %>
+    <span class="btn danger-btn">Yes, I want to delete this product.</span>
+  <% end %>
+
+  <%= link_to "Cancel", product_path(@product), class: "font-bold text-sky-500" %>
+</div>

@@ -18,7 +18,9 @@ class Product < ApplicationRecord
     "$#{'%.2f' % (price.to_i / 100.0)}"
   end
 
-  private
+  def display_name
+    name.upcase
+  end
 
   def format_date(date)
     return unless date.present?

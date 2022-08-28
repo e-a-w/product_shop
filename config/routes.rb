@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   root "products#index"
 
-  resources :products
+  resources :products do
+    member do
+      get :confirm_destroy
+      delete :destroy
+    end
+  end
 end
