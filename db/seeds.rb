@@ -36,7 +36,7 @@ Category.find_each do |category|
       category_id: category.id,
       name: Faker::Commerce.unique.product_name,
       description: (j % 3).zero? ? nil : Faker::Company.catch_phrase,
-      price: Faker::Number.within(range: 1..150),
+      price: Faker::Number.within(range: 50..15_000),
       quantity: Faker::Number.within(range: 0..100),
       last_sold_at: Faker::Date.between(from: 1.year.ago, to: Date.yesterday)
     )

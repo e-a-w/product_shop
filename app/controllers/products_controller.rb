@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :find_product, only: %i[show edit update confirm_destroy destroy]
 
   def index
-    @products = Product.all.order("UPPER(name)")
+    @products = Product.order("UPPER(name)").page(page).per(12)
   end
 
   def show; end
@@ -53,5 +53,9 @@ class ProductsController < ApplicationController
     @product = Product.find_by(id: params["id"])
 
     redirect_to products_path if @product.nil?
+  end
+
+  def page
+    params[:page] || 1
   end
 end

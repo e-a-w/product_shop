@@ -25,3 +25,12 @@
 .danger-btn:hover {
   background-color: #b91c1c;
 }
+
+.pagination span {
+  margin: 0 3px;
+  color: #0ea5e9;
+}
+
+.pagination span:hover {
+  color: #075985;
+}
