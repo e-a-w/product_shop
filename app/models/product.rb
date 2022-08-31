@@ -10,7 +10,7 @@ class Product < ApplicationRecord
 
   scope :by_department, ->(dept) { joins(:category).merge(Category.send(dept)) }
   scope :by_category, ->(category) { joins(:category).merge(Category.where(name: category)) }
-  scope :discounted, -> { joins(:category).merge(Category.discounted) }
+  scope :discounted, -> { joins(:category).merge(Category.discounted).where('price > 0') }
 
   def display_attributes
     attributes.except!('category_id').tap do |attr|
@@ -27,7 +27,7 @@ class Product < ApplicationRecord
   end
 
   def discounted?
-    discount_percent.positive?
+    discount_percent.positive? && price > 0
   end
 
   def display_name

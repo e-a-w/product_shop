@@ -7,6 +7,8 @@
   <%= form.number_field :price %>
   <%= form.label :quantity, class: "mt-2 font-bold" %>
   <%= form.number_field :quantity %>
+  <%= form.label :category, class: "mt-2 font-bold" %>
+  <%= form.select :category_id, options_from_collection_for_select(Category.order(:name).each { |c| c.name = c.name.capitalize }, :id, :name), class: "select-option" %>
   <%= form.label :description, class: "mt-2 font-bold" %>
   <%= form.text_area :description %>
   <%= form.submit class: "self-center mt-2 px-3 py-2 w-fit bg-slate-500 text-slate-50 font-bold rounded-md shadow-slate-600 shadow-md cursor-pointer" %>

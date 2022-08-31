@@ -8,21 +8,26 @@ class ProductsController < ApplicationController
 
   def by_department
     @department = params[:department] if Category.departments.keys.include?(params[:department])
-    @products = if params[:category].present?
+    @category = params[:category] if params[:category].present?
+    @products = if @category.present?
                   Product.by_category(params[:category])
                 else
                   Product.by_department(@department)
                 end
-    @products = @products.discounted if params[:clearance].present?
+    discounted = ActiveModel::Type::Boolean.new.cast(params[:clearance])
+    @products = @products.discounted if discounted
     @products = @products.page(page).per(12)
     @categories = Category.send(@department)
     @title = @department
+    @subtitle = @category.present? ? @category : discounted ? 'clearance' : 'all products'
+
     render :index
   end
 
   def clearance
     @products = Product.discounted.order(price: :asc).page(page).per(12)
     @title = 'clearance'
+
     render :index
   end
 
@@ -34,6 +39,7 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
+
     redirect_to products_path, status: :see_other, success: 'product deleted successfully'
   end
 
@@ -67,7 +73,7 @@ class ProductsController < ApplicationController
   end
 
   def permitted_create_params
-    params.require(:product).permit(:name, :description, :price, :quantity)
+    params.require(:product).permit(:name, :description, :price, :quantity, :category_id)
   end
 
   def find_product

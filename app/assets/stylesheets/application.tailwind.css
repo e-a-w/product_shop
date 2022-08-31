@@ -35,3 +35,7 @@
 .pagination span:hover {
   color: #075985;
 }
+
+option {
+  text-transform: capitalize;
+}
