@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
     collection do
       get 'department/:department', to: 'products#by_department'
+      get :clearance
     end
   end
 end

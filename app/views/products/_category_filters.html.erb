@@ -1,5 +1,9 @@
-<div class="w-full flex flex-wrap justify-center gap-5 mt-5">
+<div class="w-full flex flex-wrap justify-center gap-5">
   <%= link_to "all", "/products/department/#{@department}", class: "py-2 px-5 rounded-md bg-slate-500 text-slate-50 cursor-pointer" %>
+  <%= link_to "clearance", "/products/department/#{@department}?clearance=true", class: "py-2 px-5 rounded-md bg-slate-500 text-slate-50 cursor-pointer" %>
+</div>
+
+<div class="w-full flex flex-wrap justify-center gap-5">
   <% @categories&.each do |category| %>
     <%= link_to category.name, "/products/department/#{@department}?category=#{category.name}", class: "py-2 px-5 rounded-md bg-slate-500 text-slate-50 cursor-pointer" %>
   <% end %>

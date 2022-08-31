@@ -10,6 +10,6 @@
     <% Category.departments.each_key do |dept| %>
       <%= link_to dept, "/products/department/#{dept}", class: "h-full font-bold hover:text-slate-200" %>
     <% end %>
-    <p>clearance</p>
+    <%= link_to 'clearance', clearance_products_path, class: "h-full font-bold hover:text-slate-200" %>
   </div>
 </header>

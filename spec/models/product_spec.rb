@@ -1,10 +1,15 @@
 require "rails_helper" 
 
 RSpec.describe Product, type: :model do
+  let(:category) { create(:category, name: 'snacks', department: 'grocery', discount_percent: 0) }
+  let(:category2) { create(:category, name: 'pets', department: 'misc', discount_percent: 20) }
+  let(:category3) { create(:category, name: 'toys', department: 'misc', discount_percent: 50) }
+
   let(:date) { DateTime.parse('12-11-10 10:30:45 +0700') }
   let(:product) do
     create(:product,
     name: 'my product',
+    category: category,
     description: 'about this product',
     price: '150',
     quantity: 10,
@@ -39,13 +44,15 @@ RSpec.describe Product, type: :model do
       it { expect(subject[:created_at]).to eq('Saturday Nov 10, 3:30am +0000') }
       it { expect(subject[:last_sold_at]).to eq('Saturday Nov 10, 3:40am +0000') }
     end
+
+    context '#formatted_discount_price' do
+      let(:category) { create(:category, name: 'snacks', department: 'grocery', discount_percent: 50) }
+
+      it { expect(product.formatted_discount_price).to eq('$0.75') }
+    end
   end
 
   describe 'scopes' do
-    let(:category) { create(:category, name: 'snacks', department: 'grocery') }
-    let(:category2) { create(:category, name: 'pets', department: 'misc') }
-    let(:category3) { create(:category, name: 'toys', department: 'misc') }
-
     let(:product) { create(:product, category: category) }
     let(:product2) { create(:product, category: category2) }
     let(:product3) { create(:product, category: category3) }
@@ -57,6 +64,10 @@ RSpec.describe Product, type: :model do
 
     context '#by_category' do
       it { expect(Product.by_category('toys')).to contain_exactly(product3, product4) }
+    end
+
+    context '#discounted' do
+      it { expect(Product.discounted).to contain_exactly(product2, product4) }
     end
   end
 end

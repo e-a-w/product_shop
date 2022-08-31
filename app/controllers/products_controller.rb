@@ -9,12 +9,20 @@ class ProductsController < ApplicationController
   def by_department
     @department = params[:department] if Category.departments.keys.include?(params[:department])
     @products = if params[:category].present?
-                  Product.by_category(params[:category]).page(page).per(12)
+                  Product.by_category(params[:category])
                 else
-                  Product.by_department(@department).page(page).per(12)
+                  Product.by_department(@department)
                 end
+    @products = @products.discounted if params[:clearance].present?
+    @products = @products.page(page).per(12)
     @categories = Category.send(@department)
     @title = @department
+    render :index
+  end
+
+  def clearance
+    @products = Product.discounted.order(price: :asc).page(page).per(12)
+    @title = 'clearance'
     render :index
   end
 

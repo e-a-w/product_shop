@@ -6,4 +6,6 @@ class Category < ApplicationRecord
   enum department: { misc: 0, grocery: 1, beverage: 2, apparel: 3, houseware: 4, electronics: 5 }
 
   has_many :products
+
+  scope :discounted, -> { where('discount_percent > 0') }
 end
