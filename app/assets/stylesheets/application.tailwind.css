@@ -29,6 +29,7 @@
 .pagination span {
   margin: 0 3px;
   color: #0ea5e9;
+  font-weight: 600;
 }
 
 .pagination span:hover {

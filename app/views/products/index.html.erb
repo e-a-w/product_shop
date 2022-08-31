@@ -1,7 +1,11 @@
-<h2 class="text-2xl font-bold">All Products</h2>
+<h2 class="text-2xl font-bold"><%= @title.titleize %></h2>
 
-<div class="my-10">
+<div class="w-full my-10 flex flex-col items-center">
   <%= paginate @products, outer_window: 3, class: "pagination" %>
+
+  <% if @categories.present? %>
+    <%= render 'category_filters' %>
+  <% end %>
 </div>
 
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 md:gap-x-5 gap-y-10">

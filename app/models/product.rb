@@ -6,8 +6,13 @@ class Product < ApplicationRecord
 
   belongs_to :category
 
+  delegate :department, to: :category
+
+  scope :by_department, ->(dept) { Product.joins(:category).merge(Category.send(dept)) }
+  scope :by_category, ->(category) { Product.joins(:category).merge(Category.where(name: category)) }
+
   def display_attributes
-    attributes.tap do |attr|
+    attributes.except!('category_id').tap do |attr|
       attr['price'] = formatted_price
       attr['name'] = attr['name'].upcase
       attr['created_at'] = format_date(attr['created_at'])

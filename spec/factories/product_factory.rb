@@ -5,5 +5,6 @@ FactoryBot.define do
     price { 50 }
     quantity { 10 }
     last_sold_at { 5.days.ago }
+    association :category, factory: :category
   end
 end

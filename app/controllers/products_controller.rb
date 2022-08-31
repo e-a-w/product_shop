@@ -2,7 +2,20 @@ class ProductsController < ApplicationController
   before_action :find_product, only: %i[show edit update confirm_destroy destroy]
 
   def index
-    @products = Product.order("UPPER(name)").page(page).per(12)
+    @title = 'all departments'
+    @products = Product.order('UPPER(name)').page(page).per(12)
+  end
+
+  def by_department
+    @department = params[:department] if Category.departments.keys.include?(params[:department])
+    @products = if params[:category].present?
+                  Product.by_category(params[:category]).page(page).per(12)
+                else
+                  Product.by_department(@department).page(page).per(12)
+                end
+    @categories = Category.send(@department)
+    @title = @department
+    render :index
   end
 
   def show; end

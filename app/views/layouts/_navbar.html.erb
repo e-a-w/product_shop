@@ -8,7 +8,7 @@
     <p>featured</p>
     <p>top-sellers</p>
     <% Category.departments.each_key do |dept| %>
-      <p><%= dept %></p>
+      <%= link_to dept, "/products/department/#{dept}", class: "h-full font-bold hover:text-slate-200" %>
     <% end %>
     <p>clearance</p>
   </div>
