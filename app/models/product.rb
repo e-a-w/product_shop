@@ -13,7 +13,7 @@ class Product < ApplicationRecord
   scope :discounted, -> { joins(:category).merge(Category.discounted).where('price > 0') }
 
   def display_attributes
-    attributes.except!('category_id').tap do |attr|
+    attrs = attributes.except!('category_id').tap do |attr|
       attr['price'] = formatted_price_in_dollars
       if discounted?
         attr['discount_price'] = formatted_discount_price
@@ -23,6 +23,16 @@ class Product < ApplicationRecord
       attr['created_at'] = format_date(attr['created_at'])
       attr['updated_at'] = format_date(attr['updated_at'])
       attr['last_sold_at'] = format_date(attr['last_sold_at'])
+    end
+
+    attrs.inject([]) do |acc, (k, v)|
+      if %w[discount_price discount_percent].include?(k)
+        idx = acc.index({ "price" => formatted_price_in_dollars })
+        idx += k == 'discount_price' ? 1 : 2
+        acc.insert(idx, { k => v })
+      else
+        acc << { k => v }
+      end
     end
   end
 

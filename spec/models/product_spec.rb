@@ -31,18 +31,36 @@ RSpec.describe Product, type: :model do
   end
 
   describe 'display methods' do
-    context '#display_attributes' do
+    context '#display_attributes, when not discounted' do
       subject { product.display_attributes.deep_symbolize_keys }
 
       it { expect(subject.keys.size).to eq(8) }
-      it { expect(subject[:id]).to eq(product.id) }
-      it { expect(subject[:name]).to eq('MY PRODUCT') }
-      it { expect(subject[:description]).to eq('about this product') }
-      it { expect(subject[:price]).to eq('$1.50') }
-      it { expect(subject[:quantity]).to eq(10) }
-      it { expect(subject[:updated_at]).to eq('Saturday Nov 10, 3:35am +0000') }
-      it { expect(subject[:created_at]).to eq('Saturday Nov 10, 3:30am +0000') }
-      it { expect(subject[:last_sold_at]).to eq('Saturday Nov 10, 3:40am +0000') }
+      it { expect(subject[0]).to eq('id' => product.id) }
+      it { expect(subject[1]).to eq('name' => 'MY PRODUCT') }
+      it { expect(subject[2]).to eq('description' => 'about this product') }
+      it { expect(subject[3]).to eq('price' => '$1.50') }
+      it { expect(subject[4]).to eq('quantity' => 10) }
+      it { expect(subject[5]).to eq('last_sold_at' => 'Saturday Nov 10, 3:35am +0000') }
+      it { expect(subject[6]).to eq('created_at' => 'Saturday Nov 10, 3:30am +0000') }
+      it { expect(subject[7]).to eq('updated_at' => 'Saturday Nov 10, 3:40am +0000') }
+    end
+
+    context '#display_attributes, when discounted' do
+      before { product.update(category: category3) }
+
+      subject { product.display_attributes.deep_symbolize_keys }
+
+      it { expect(subject.keys.size).to eq(10) }
+      it { expect(subject[0]).to eq('id' => product.id) }
+      it { expect(subject[1]).to eq('name' => 'MY PRODUCT') }
+      it { expect(subject[2]).to eq('description' => 'about this product') }
+      it { expect(subject[3]).to eq('price' => '$1.50') }
+      it { expect(subject[4]).to eq('discount_price' => '$0.75') }
+      it { expect(subject[5]).to eq('discount_percent' => '50% off') }
+      it { expect(subject[6]).to eq('quantity' => 10) }
+      it { expect(subject[7]).to eq('last_sold_at' => 'Saturday Nov 10, 3:35am +0000') }
+      it { expect(subject[8]).to eq('created_at' => 'Saturday Nov 10, 3:30am +0000') }
+      it { expect(subject[9]).to eq('updated_at' => 'Saturday Nov 10, 3:40am +0000') }
     end
 
     context '#formatted_discount_price' do
