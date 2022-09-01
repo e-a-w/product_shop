@@ -1,13 +1,13 @@
 <h1 class="text-3xl font-bold mb-10">Edit Product</h1>
 
-<%= form_with model: @product, class: "flex flex-col gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-1/4" do |form| %>
+<%= form_with model: @product, class: "form" do |form| %>
   <%= form.label :name, class: "font-bold" %>
   <%= form.text_field :name %>
   <%= form.label :price, "Price (in cents)", class: "mt-2 font-bold" %>
   <%= form.number_field :price %>
   <%= form.label :description, class: "mt-2 font-bold" %>
   <%= form.text_area :description %>
-  <%= form.submit class: "self-center mt-2 px-3 py-2 w-fit bg-slate-500 text-slate-50 font-bold rounded-md shadow-slate-600 shadow-md cursor-pointer" %>
+  <%= form.submit class: "form-submit-btn" %>
 <% end %>
 
 <%= link_to "return to product details?", @product, class: "mt-10 font-bold text-sky-600 hover:text-sky-400" %>

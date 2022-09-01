@@ -1,15 +1,15 @@
 <header class="relative top-0 left-0 w-full">
-  <div class="h-16 flex justify-center items-center bg-slate-800 text-slate-50">
+  <div class="h-16 flex justify-center items-center bg-sky-800 text-sky-50">
     <h1 class="text-3xl text-center font-bold">The Shop</h1>
   </div>
-  <div class="p-5 h-full w-full flex flex-wrap justify-center items-center gap-5 bg-slate-500 text-slate-50">
-    <%= link_to "create product", new_product_path, class: "h-full font-bold hover:text-slate-200" %>
-    <%= link_to "all products", products_path, class: "h-full font-bold hover:text-slate-200" %>
-    <%= link_to 'featured', featured_products_path, class: "h-full font-bold hover:text-slate-200" %>
+  <div class="p-5 h-full w-full flex flex-wrap justify-center items-center gap-5 bg-sky-500 text-sky-50">
+    <%= link_to "create product", new_product_path, class: "navbar-link" %>
+    <%= link_to "all products", products_path, class: "navbar-link" %>
+    <%= link_to 'featured', featured_products_path, class: "navbar-link" %>
     <p>top-sellers</p>
     <% Category.departments.each_key do |dept| %>
-      <%= link_to dept, "/products/department/#{dept}", class: "h-full font-bold hover:text-slate-200" %>
+      <%= link_to dept, "/products/department/#{dept}", class: "navbar-link" %>
     <% end %>
-    <%= link_to 'clearance', clearance_products_path, class: "h-full font-bold hover:text-slate-200" %>
+    <%= link_to 'clearance', clearance_products_path, class: "navbar-link" %>
   </div>
 </header>

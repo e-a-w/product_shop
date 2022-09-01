@@ -1,13 +1,23 @@
-<div class="p-2 flex flex-col justify-between items-center gap-3 text-center border border-slate-800 rounded-md shadow-md shadow-slate-400 bg-white max-w-[300px]">
-  <h3 class="text-xl font-semibold"><%= product.display_name %></h3>
+<div class="p-2 flex flex-col justify-between items-center gap-3 text-center border-t-2 border-sky-400 rounded-md shadow-md shadow-slate-400 bg-white max-w-[300px">
 
-  <%= link_to "--> view product details", product_path(product.id), class: "italic text-sky-600 hover:text-sky-400" %>
+  <div class="h-full flex flex-col justify-between items-center gap-5">
+    <% if product.featured? %>
+      <p class="italic pb-2 border-b border-slate-400 border-dashed">
+        featured until 
+        <span class="text-sky-500">
+          <%= product.feature_end_date %>
+        </span>
+        !
+      </p>
+    <% end %>
 
-  <% if product.featured? %>
-    <p class="font-semibold">featured until <%= product.feature_end_date %></p>
-  <% end %>
+    <h3 class="w-full text-xl font-semibold"><%= product.display_name %></h3>
 
-  <div class="w-full pt-2 border-t border-gray-400 border-dashed">
+    <%= link_to "--> view product details", product_path(product.id), class: "font-semibold text-emerald-500 hover:text-emerald-800" %>
+  </div>
+
+
+  <div class="w-full pt-2 border-t border-slate-400 border-dashed">
     <% if product.discounted? %>
       <p>
         <em>Price:</em>
@@ -23,14 +33,14 @@
       <em>Department:</em>
       <%= link_to product.department.upcase,
         "/products/department/#{product.department}",
-        class: "font-semibold text-slate-500 hover:text-slate-800"
+        class: "font-semibold text-sky-500 hover:text-sky-800"
       %>
     </p>
     <p>
       <em>Category:</em>
       <%= link_to product.category.name.upcase,
         "/products/department/#{product.department}?category=#{product.category.name}",
-        class: "font-semibold text-slate-500 hover:text-slate-800"
+        class: "font-semibold text-sky-500 hover:text-sky-800"
       %>
     </p>
   </div>
