@@ -32,25 +32,25 @@ RSpec.describe Product, type: :model do
 
   describe 'display methods' do
     context '#display_attributes, when not discounted' do
-      subject { product.display_attributes.deep_symbolize_keys }
+      subject { product.display_attributes }
 
-      it { expect(subject.keys.size).to eq(8) }
+      it { expect(subject.size).to eq(8) }
       it { expect(subject[0]).to eq('id' => product.id) }
       it { expect(subject[1]).to eq('name' => 'MY PRODUCT') }
       it { expect(subject[2]).to eq('description' => 'about this product') }
       it { expect(subject[3]).to eq('price' => '$1.50') }
       it { expect(subject[4]).to eq('quantity' => 10) }
-      it { expect(subject[5]).to eq('last_sold_at' => 'Saturday Nov 10, 3:35am +0000') }
+      it { expect(subject[5]).to eq('last_sold_at' => 'Saturday Nov 10, 3:40am +0000') }
       it { expect(subject[6]).to eq('created_at' => 'Saturday Nov 10, 3:30am +0000') }
-      it { expect(subject[7]).to eq('updated_at' => 'Saturday Nov 10, 3:40am +0000') }
+      it { expect(subject[7]).to eq('updated_at' => 'Saturday Nov 10, 3:35am +0000') }
     end
 
     context '#display_attributes, when discounted' do
-      before { product.update(category: category3) }
+      before { product.update_columns(category_id: category3.id) }
 
-      subject { product.display_attributes.deep_symbolize_keys }
+      subject { product.display_attributes }
 
-      it { expect(subject.keys.size).to eq(10) }
+      it { expect(subject.size).to eq(10) }
       it { expect(subject[0]).to eq('id' => product.id) }
       it { expect(subject[1]).to eq('name' => 'MY PRODUCT') }
       it { expect(subject[2]).to eq('description' => 'about this product') }
@@ -58,9 +58,9 @@ RSpec.describe Product, type: :model do
       it { expect(subject[4]).to eq('discount_price' => '$0.75') }
       it { expect(subject[5]).to eq('discount_percent' => '50% off') }
       it { expect(subject[6]).to eq('quantity' => 10) }
-      it { expect(subject[7]).to eq('last_sold_at' => 'Saturday Nov 10, 3:35am +0000') }
+      it { expect(subject[7]).to eq('last_sold_at' => 'Saturday Nov 10, 3:40am +0000') }
       it { expect(subject[8]).to eq('created_at' => 'Saturday Nov 10, 3:30am +0000') }
-      it { expect(subject[9]).to eq('updated_at' => 'Saturday Nov 10, 3:40am +0000') }
+      it { expect(subject[9]).to eq('updated_at' => 'Saturday Nov 10, 3:35am +0000') }
     end
 
     context '#formatted_discount_price' do
@@ -86,6 +86,13 @@ RSpec.describe Product, type: :model do
 
     context '#discounted' do
       it { expect(Product.discounted).to contain_exactly(product2, product4) }
+    end
+
+    context '#featured' do
+      # factory creates an 'active' feature window
+      let!(:feature_window) { create(:feature_window, product: product) }
+
+      it { expect(Product.featured).to contain_exactly(product) }
     end
   end
 end

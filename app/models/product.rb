@@ -5,12 +5,14 @@ class Product < ApplicationRecord
   validates :quantity, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   belongs_to :category
+  has_many :feature_windows
 
   delegate :department, :discount_percent, to: :category
 
   scope :by_department, ->(dept) { joins(:category).merge(Category.send(dept)) }
   scope :by_category, ->(category) { joins(:category).merge(Category.where(name: category)) }
   scope :discounted, -> { joins(:category).merge(Category.discounted).where('price > 0') }
+  scope :featured, -> { joins(:feature_windows).merge(FeatureWindow.active) }
 
   def display_attributes
     attrs = attributes.except!('category_id').tap do |attr|
@@ -38,6 +40,14 @@ class Product < ApplicationRecord
 
   def discounted?
     discount_percent.positive? && price > 0
+  end
+
+  def featured?
+    feature_windows.active.exists?
+  end
+
+  def feature_end_date
+    feature_windows.order(end_date: :desc).first.end_date.strftime("%F")
   end
 
   def display_name

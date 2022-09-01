@@ -31,6 +31,13 @@ class ProductsController < ApplicationController
     render :index
   end
 
+  def featured
+    @products = Product.featured.order(:end_date, 'UPPER(name)').page(page).per(12)
+    @title = 'featured products'
+
+    render :index
+  end
+
   def show; end
 
   def edit; end
