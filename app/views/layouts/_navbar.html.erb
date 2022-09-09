@@ -3,22 +3,16 @@
     <h1 class="text-3xl text-center font-bold">The Shop</h1>
   </div>
 
-  <div class="p-5 h-full w-full flex flex-wrap justify-center items-center gap-5 bg-sky-500 text-sky-50">
-    <%= link_to "create product", new_product_path, class: "navbar-link" %>
-    <%= link_to "all products", products_path, class: "navbar-link" %>
-    <%= link_to 'featured', featured_products_path, class: "navbar-link" %>
-    <p>top-sellers</p>
-    <% Category.departments.each_key do |dept| %>
-      <%= link_to dept, "/products/department/#{dept}", class: "navbar-link" %>
-    <% end %>
-    <%= link_to 'clearance', clearance_products_path, class: "navbar-link" %>
-    <%= link_to 'advanced search', advanced_search_form_products_path, class: "navbar-link" %>
-  </div>
+  <div class="px-5 py-2 h-full w-full flex flex-wrap md:flex-nowrap justify-center md:justify-between items-center gap-5 bg-sky-500 text-sky-50">
+    <div class="basis-[450px] flex justify-center items-center gap-5">
+      <%= render 'layouts/navbar_dropdown', title: 'manage products', collection: @manage_products_dropdown %>
+      <%= render 'layouts/navbar_dropdown', title: 'find products', collection: @find_products_dropdown %>
+      <p>sales</p>
+    </div>
 
-  <div class="p-5 bg-sky-200 text-center">
-  <%= form_with url: search_products_path, method: :get, class: "flex gap-2 justify-center items-center" do |form| %>
-    <%= form.text_field :name_or_description_cont, placeholder: "search by name or description", class: "w-full max-w-xs rounded-md border border-sky-500 text-slate-600 placeholder:text-slate-400" %>
-    <%= form.submit "Search", class: "form-submit-btn m-0" %>
-  <% end %>
+    <%= form_with url: search_products_path, method: :get, class: "flex gap-2 justify-center items-center" do |form| %>
+      <%= form.text_field :name_or_description_cont, placeholder: "search products", class: "py-1 rounded-md border border-sky-500 text-slate-600 placeholder:text-slate-400 placeholder:font-light" %>
+      <%= form.submit "search", class: "m-0 bg-sky-800 text-sky-50 px-3 py-1 w-fit rounded-md shadow-sm shadow-sky-800 cursor-pointer font-extralight hover:bg-sky-700 transition-colors duration-300" %>
+    <% end %>
   </div>
 </header>

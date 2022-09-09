@@ -1,0 +1,32 @@
+<div data-controller="dropdown" class="relative basis-full">
+  <p data-action="click->dropdown#toggle" class="navbar-link cursor-pointer">
+    <span class="text-xs opacity-70">&#9660;</span>
+    <%= title %>
+  </p>
+
+  <div
+    data-dropdown-target="menu"
+    class="navbar-menu hidden"
+  >
+    <% collection.each do |key, val| %>
+      <% if val.is_a?(Hash) %>
+        <div class="mt-2 mb-4 py-1 border-b border-sky-50">
+          <p class="border-b border-sky-5 italic"><%= key %></p>
+          <div class="flex flex-col">
+            <% val.each do |inner_key, inner_val| %>
+              <div class="flex gap-2 items-center">
+                <span class="text-xs opacity-70">&#10148;</span>
+                <%= link_to inner_key, inner_val, class: "navbar-link" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="flex gap-2 items-center">
+          <span class="text-xs opacity-70">&#10148;</span>
+          <%= link_to key, val, class: "navbar-link" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

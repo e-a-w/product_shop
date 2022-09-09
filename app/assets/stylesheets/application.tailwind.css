@@ -11,6 +11,14 @@
     @apply h-full font-bold hover:text-sky-200;
   }
 
+  .navbar-menu {
+    @apply w-full p-2 flex flex-col absolute bg-sky-500 rounded-bl-md rounded-br-md border-b-2 border-sky-800;
+  }
+
+  .navbar-menu .navbar-link {
+    @apply font-normal;
+  }
+
   .form {
     @apply flex flex-col gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-1/3;
   }
