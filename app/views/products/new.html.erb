@@ -3,13 +3,13 @@
 <%= form_with model: @product, class: "form" do |form| %>
   <%= form.label :name, class: "font-bold" %>
   <%= form.text_field :name %>
-  <%= form.label :price, "Price (in cents)", class: "mt-2 font-bold" %>
+  <%= form.label :price, "Price (in cents)" %>
   <%= form.number_field :price %>
-  <%= form.label :quantity, class: "mt-2 font-bold" %>
+  <%= form.label :quantity %>
   <%= form.number_field :quantity %>
-  <%= form.label :category, class: "mt-2 font-bold" %>
+  <%= form.label :category %>
   <%= form.select :category_id, options_from_collection_for_select(Category.order(:name).each { |c| c.name = c.name.capitalize }, :id, :name), class: "select-option" %>
-  <%= form.label :description, class: "mt-2 font-bold" %>
+  <%= form.label :description %>
   <%= form.text_area :description %>
-  <%= form.submit class: "form-submit-btn" %>
+  <%= form.submit %>
 <% end %>

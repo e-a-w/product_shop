@@ -35,8 +35,22 @@ class ProductsController < ApplicationController
     @products = Product.featured.order(:end_date, 'UPPER(name)').page(page).per(12)
     @title = 'featured products'
 
-    render :index
+    redirect_to products_path
   end
+
+  def search
+    @products = Product.ransack(params).result.page(page).per(12)
+    @title = 'search results'
+
+    if @products.count <= 0
+      flash.now[:error] = 'Products not found'
+      render :index, status: :not_found
+    else
+      render :index, status: :ok
+    end
+  end
+
+  def advanced_search_form; end
 
   def show; end
 

@@ -48,6 +48,9 @@ gem "bootsnap", require: false
 # pagination
 gem 'kaminari'
 
+# advanced search
+gem 'ransack'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
